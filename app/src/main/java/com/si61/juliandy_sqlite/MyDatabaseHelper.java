@@ -1,14 +1,13 @@
 package com.si61.juliandy_sqlite;
 
-
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SearchRecentSuggestionsProvider;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
-
 public class MyDatabaseHelper extends SQLiteOpenHelper {
     private Context ctx;
     private static final String DATABASE_NAME = "db_mahasiswa";
@@ -26,17 +25,25 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String query = "CREATE TABLE " + TABLE_NAME + "(" +
-                FIELD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                FIELD_NAMA + " VARCHAR(50), " +
-                FIELD_ALAMAT + " TEXT,"+
-                FIELD_JAM + " VARCHAR(30)" +
+
+        String query = "CREATE TABLE " + TABLE_NAME + " (" +
+                FIELD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                FIELD_NPM + " CHAR(10), " +
+                FIELD_NAMA + " VARCHAR(50)," +
+                FIELD_PRODI + " VARCHAR(75)" +
                 ");"
                 ;
         db.execSQL(query);
-//        onCreate(db);
     }
-    public long tambahDATA(String npm  , String nama, String prodi) {
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        String query = "DROP TABLE IF EXISTS " + TABLE_NAME;
+        db.execSQL(query);
+        onCreate(db);
+    }
+
+    public long tambahData(String npm, String nama, String prodi) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -48,17 +55,16 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return eksekusi;
     }
 
-    public Cursor bacaMahasiswa(){
-        SQLiteDatabase db = this.getReadableDatabase();
+    public Cursor bacaDataMahasiswa(){
+        SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT * FROM " + TABLE_NAME;
 
         Cursor varCursor = null;
-        if (db != null){
-            varCursor = db.rawQuery(query,null);
+        if(db!=null){
+            varCursor = db.rawQuery(query, null);
+
         }
 
-        return varCursor;
+        return  varCursor;
     }
 }
-
-

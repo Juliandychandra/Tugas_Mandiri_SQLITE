@@ -1,4 +1,4 @@
-package com.si61.juliandy_sqlite.;
+package com.si61.juliandy_sqlite;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -18,7 +18,7 @@ public class AdapterMahasiswa  extends  RecyclerView.Adapter<AdapterMahasiswa.Vi
     private Context ctx;
     private ArrayList  arrId, arrNpm, arrNama, arrProdi;
 
-    public AdapterDestinasi(Context ctx, ArrayList arrId, ArrayList arrNpm, ArrayList arrNama, ArrayList arrProdi) {
+    public AdapterMahasiswa(Context ctx, ArrayList arrId, ArrayList arrNpm, ArrayList arrNama, ArrayList arrProdi) {
         this.ctx = ctx;
         this.arrId = arrId;
         this.arrNpm = arrNpm;
